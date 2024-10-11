@@ -15,12 +15,13 @@ intrare
 
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
 
 public class Main {
-    public class Vers
+    public static class Vers
     {
         private String Vers;
         public Vers(String Vers)
@@ -44,31 +45,47 @@ public class Main {
             }
             return count;
         }
-        public void steluta () throws FileNotFoundException {
+        public boolean steluta () throws FileNotFoundException {
+            System.out.print("Terminilogie: ");
             Scanner sc = new Scanner(System.in);
             String a = sc.nextLine();
             String Vers2 = Vers;
             if(Vers2.endsWith(a))
             {
-                Vers2+="*";
+                return true;
             }
-
+            else return false;
+        }
+        public String returnVers()
+        {
+            return Vers;
         }
         public void maj()
         {
             Random rand = new Random();
-            float a=rand.nextFloat(2);
-            String Vers2 = Vers;
+            float a=rand.nextFloat(1);
             if (a<0.1)
             {
-                Vers2 = Vers2.toUpperCase();
+                Vers = Vers.toUpperCase();
             }
 
         }
     }
     public static void main(String[] args) throws IOException {
-        Vector<String> v = new Vector<>(50,1);
         Scanner sc = new Scanner(new File("src/Exercitiu2/cantec_in.txt"));
         Writer wr = new FileWriter("src/Exercitiu2/cantec_out.txt");
+        while (sc.hasNextLine())
+        {
+            Vers ver = new Vers(sc.nextLine());
+            if (ver.steluta()) {
+                ver.maj();
+                wr.write(ver.returnVers() + "  " + ver.numarcuv() + "  " + ver.numarvoc() + "*" + "\n");
+            }
+            else {
+                ver.maj();
+                wr.write(ver.returnVers() + "  " + ver.numarcuv() + "  " + ver.numarvoc() + "\n");
+            }
+        }
+        wr.close();
     }
 }
