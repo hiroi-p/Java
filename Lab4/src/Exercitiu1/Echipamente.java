@@ -1,6 +1,6 @@
 package Exercitiu1;
 
-public class Echipamente {
+public class Echipamente  implements java.io.Serializable {
     private String denumire;
     private int nr_inv;
     private float pret;
