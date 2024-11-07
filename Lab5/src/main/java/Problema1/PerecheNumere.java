@@ -3,72 +3,85 @@ package Problema1;
 import java.util.ArrayList;
 
 public class PerecheNumere {
-    private int a;
-    private int b;
+    private int numar1;
+    private int numar2;
 
-    public PerecheNumere(int a, int b) {
-        this.a = a;
-        this.b = b;
+    public PerecheNumere(int numar1, int numar2) {
+        this.numar1 = numar1;
+        this.numar2 = numar2;
+    }
+    public PerecheNumere()
+    {
+
     }
 
-    public PerecheNumere() {
+    public int getNumar1() {
+        return numar1;
+    }
+
+    public void setNumar1(int numar1) {
+        this.numar1 = numar1;
+    }
+
+    public int getNumar2() {
+        return numar2;
+    }
+
+    public void setNumar2(int numar2) {
+        this.numar2 = numar2;
     }
 
     @Override
     public String toString() {
         return "PerecheNumere{" +
-                "a=" + a +
-                ", b=" + b +
+                "numar1=" + numar1 +
+                ", numar2=" + numar2 +
                 '}';
     }
 
-    public int getA() {
+    // Metodă pentru a verifica dacă numerele sunt consecutive în șirul lui Fibonacci
+    public boolean suntConsecutiveFibonacci() {
+        return esteFibonacci(numar1) && esteFibonacci(numar2) &&
+                (numar1 == fibonacciPrecedent(numar2) || numar2 == fibonacciPrecedent(numar1));
+    }
+
+    private boolean esteFibonacci(int numar) {
+        int a = 0, b = 1;
+        while (b < numar) {
+            int temp = b;
+            b = a + b;
+            a = temp;
+        }
+        return b == numar;
+    }
+
+    private int fibonacciPrecedent(int numar) {
+        int a = 0, b = 1;
+        while (b < numar) {
+            int temp = b;
+            b = a + b;
+            a = temp;
+        }
         return a;
     }
 
-    public void setA(int a) {
-        this.a = a;
-    }
-
-    public int getB() {
-        return b;
-    }
-
-    public void setB(int b) {
-        this.b = b;
-    }
-    public boolean suntConsecutiveFibonacci() {
-        List<Integer> fibonacci = new ArrayList<>();
-        fibonacci.add(0);
-        fibonacci.add(1);
-        int a = 0, b = 1, c = a + b;
-        while (c <= Math.max(numar1, numar2)) {
-            fibonacci.add(c);
-            a = b;
-            b = c;
-            c = a + b;
-        }
-        return fibonacci.contains(numar1) && fibonacci.contains(numar2) &&
-                Math.abs(fibonacci.indexOf(numar1) - fibonacci.indexOf(numar2)) == 1;
-    }
+    // Metodă pentru a calcula cel mai mic multiplu comun
     public int celMaiMicMultipluComun() {
-        return (numar1 * numar2) / cmmdc(numar1, numar2);
+        return (numar1 * numar2) / celMaiMareDivizorComun(numar1, numar2);
     }
 
-    private int cmmdc(int a, int b) {
-        if (b == 0) return a;
-        return cmmdc(b, a % b);
-    }
-    private int numarCifrePare(int numar) {
-        int nr = 0;
-        while (numar != 0) {
-            if ((numar % 10) % 2 == 0) nr++;
-            numar /= 10;
+    private int celMaiMareDivizorComun(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
         }
-        return nr;
+        return a;
     }
-    public boolean aceeasiNumarCifrePare() {
-        return numarCifrePare(numar1) == numarCifrePare(numar2);
+
+    // Metodă pentru a verifica dacă suma cifrelor este egală
+    public boolean sumaCifrelorEgala() {
+        return sumaCifrelor(numar1) == sumaCifrelor(numar2);
     }
 
     private int sumaCifrelor(int numar) {
@@ -79,7 +92,20 @@ public class PerecheNumere {
         }
         return suma;
     }
-    public boolean sumaCifrelorEgala() {
-        return sumaCifrelor(numar1) == sumaCifrelor(numar2);
+
+    // Metodă pentru a verifica dacă numerele au același număr de cifre pare
+    public boolean acelasiNumarDeCifrePare() {
+        return numarCifrePare(numar1) == numarCifrePare(numar2);
+    }
+
+    private int numarCifrePare(int numar) {
+        int count = 0;
+        while (numar != 0) {
+            if ((numar % 10) % 2 == 0) {
+                count++;
+            }
+            numar /= 10;
+        }
+        return count;
     }
 }
